@@ -1,14 +1,29 @@
-import React from 'react';
-import { Counter } from './features/Counter';
+import React, { useEffect } from 'react';
 import './App.css';
 import Sidebar from './Sidebar';
 import Chat from './Chat';
+import { useSelector } from 'react-redux';
+import { selectUser } from './features/userSlice';
+import Login from './Login';
+import { auth } from './firebase';
 
 function App() {
+  const user = useSelector(selectUser)
+  useEffect(()=>{
+    auth.onAuthStateChanged(authUser=>{
+      
+    })
+  },[])
   return (
     <div className="app">
-        <Sidebar/>
-        <Chat/>
+      {user ? (
+        <>
+          <Sidebar/>
+          <Chat/>
+        </>
+      ) : (
+        <Login/>
+      )}
     </div>
   );
 }
